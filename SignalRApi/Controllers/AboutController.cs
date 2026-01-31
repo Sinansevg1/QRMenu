@@ -13,6 +13,7 @@ namespace SignalRApi.Controllers
     {
         private readonly IAboutService _aboutService;
 
+        //Dependency Injection ile IAboutService arayüzü enjekte ediliyor
         public AboutController(IAboutService aboutService)
         {
             _aboutService = aboutService;
