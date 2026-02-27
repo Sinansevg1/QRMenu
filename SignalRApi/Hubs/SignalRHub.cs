@@ -89,10 +89,15 @@ namespace SignalRApi.Hubs
             var values = _bookingService.TGetListAll();
             await Clients.All.SendAsync("ReceiveBookingList", values);
         }
+
         public async Task SendNotification()
         {
             var values = _notificationService.TNotificationCountByStatusFalse();
             await Clients.All.SendAsync("ReceiveNotificationCountByFalse", values);
+
+            var notificationListByFalse = _notificationService.TGetAllNotificationByFalse();
+
+            await Clients.All.SendAsync("ReceiveNotificationListByFalse", notificationListByFalse);
         }
     }
 }
