@@ -6,10 +6,10 @@ using System.Text;
 
 namespace SignalRWebUI.Controllers
 {
-    public class MenuTablesController1 : Controller
+    public class MenuTablesController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public MenuTablesController1(IHttpClientFactory httpClientFactory)
+        public MenuTablesController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -20,7 +20,7 @@ namespace SignalRWebUI.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultAboutDto>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ResultMenuTableDto>>(jsonData);
                 return View(values);
             }
             return View();
@@ -33,6 +33,7 @@ namespace SignalRWebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMenuTable(CreateMenuTableDto createMenuTableDto)
         {
+            createMenuTableDto.Status = false;
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createMenuTableDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
