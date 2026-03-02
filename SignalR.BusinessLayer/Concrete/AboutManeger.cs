@@ -34,11 +34,6 @@ namespace SignalR.BusinessLayer.Concrete
             return _aboutDal.GetByID(id);
         }
 
-        public About TGetById(int id)
-        {
-            return _aboutDal.GetByID(id);
-        }
-
         public List<About> TGetListAll()
         {
             return _aboutDal.GetListAll();
