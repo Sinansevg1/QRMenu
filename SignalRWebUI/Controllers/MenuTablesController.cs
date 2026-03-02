@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalRWebUI.Dtos.AboutDtos;
 using SignalRWebUI.Dtos.MenuTableDtos;
 using System.Text;
 
@@ -77,6 +76,19 @@ namespace SignalRWebUI.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("index");
+            }
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> TableListByStatus()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync("https://localhost:7096/api/MenuTables");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultMenuTableDto>>(jsonData);
+                return View(values);
             }
             return View();
         }
