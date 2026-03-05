@@ -1,3 +1,6 @@
+using SignalR.DataAccessLayer.concrete;
+using SignalR.EntityLayer.Entities;
+
 namespace SignalRWebUI
 {
     public class Program
@@ -8,6 +11,8 @@ namespace SignalRWebUI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<SignalRContext>();
+            builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<SignalRContext>();
             builder.Services.AddHttpClient();
             builder.Services.AddControllersWithViews();
 
