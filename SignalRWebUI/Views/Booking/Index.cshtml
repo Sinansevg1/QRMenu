@@ -23,7 +23,7 @@
                     $("#connstatus").text(connection.state);
                     setInterval(()=>{
 						connection.invoke("GetBookingList");
-					},2000);//2 saniyede bir GetBookingList metodunu tetikleyecek
+					},1000);//1 saniyede bir GetBookingList metodunu tetikleyecek
                 }).catch((err)=>{  console.log(err) });
 
 
@@ -52,8 +52,8 @@
                                         <td>${item.description}</td>
 										<td><a href="/Booking/DeleteBooking/${item.bookingID}" class="btn btn-outline-danger">Sil</a></td>
 										<td><a href="/Booking/UpdateBooking/${item.bookingID}" class="btn btn-outline-info">Güncelle</a></td>
-										<td><a href="/Booking/UpdateBooking/${item.bookingID}" class="btn btn-outline-success">Onayla</a></td>
-										<td><a href="/Booking/UpdateBooking/${item.bookingID}" class="btn btn-outline-dark">İptal Et</a></td>
+										<td><a href="/Booking/BookingStatusApproved/${item.bookingID}" class="btn btn-outline-success">Onayla</a></td>
+										<td><a href="/Booking/BookingStatusCancelled/${item.bookingID}" class="btn btn-outline-dark">İptal Et</a></td>
                                         </tr>`
 					});
                     tablehtml += "</tbody></table>";

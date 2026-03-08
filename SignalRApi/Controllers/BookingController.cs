@@ -31,7 +31,8 @@ namespace SignalRApi.Controllers
                 Date = createBookingDto.Date,
                 Name = createBookingDto.Name,
                 PersonCount = createBookingDto.PersonCount,
-                Phone = createBookingDto.Phone
+                Phone = createBookingDto.Phone,
+                Description=createBookingDto.Description,
             };
             _bookingService.TAdd(booking);
             return Ok("Rezervasyon yapıldı");
@@ -80,5 +81,3 @@ namespace SignalRApi.Controllers
         }
     }
 }
-//void BookingStatusApproved(int id);
-//void BookingStatusCancelled(int id);
