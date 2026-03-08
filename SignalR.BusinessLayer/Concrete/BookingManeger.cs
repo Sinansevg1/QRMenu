@@ -18,12 +18,12 @@ namespace SignalR.BusinessLayer.Concrete
             _bookingDal = bookingDal;
         }
 
-        public void BookingStatusApproved(int id)
+        public void TBookingStatusApproved(int id)
         {
             _bookingDal.BookingStatusApproved(id);
         }
 
-        public void BookingStatusCancelled(int id)
+        public void TBookingStatusCancelled(int id)
         {
             _bookingDal.BookingStatusCancelled(id);
         }

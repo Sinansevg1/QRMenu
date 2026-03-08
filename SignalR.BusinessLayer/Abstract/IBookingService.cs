@@ -10,7 +10,7 @@ namespace SignalR.BusinessLayer.Abstract
     public interface IBookingService : IGenericService<Booking>
     {
         object TGetList();
-        void BookingStatusApproved(int id);
-        void BookingStatusCancelled(int id);
+        void TBookingStatusApproved(int id);
+        void TBookingStatusCancelled(int id);
     }
 }
