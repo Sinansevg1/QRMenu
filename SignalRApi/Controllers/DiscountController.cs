@@ -75,6 +75,11 @@ namespace SignalRApi.Controllers
             _disvountService.TChangeStatusToFalse(id);
             return Ok("Ürün İndirimi Pasif Hale Getirildi");
         }
+        [HttpGet("GetListByStatusTrue")]
+        public IActionResult GetListByStatusTrue() 
+        {
+            return Ok(_disvountService.TGetListByStatusTrue());
+        }
 
     }
 }
