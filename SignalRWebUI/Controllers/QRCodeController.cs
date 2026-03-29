@@ -2,6 +2,7 @@
 using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
+using ZXing.Windows.Compatibility;
 
 namespace SignalRWebUI.Controllers
 {
@@ -12,19 +13,38 @@ namespace SignalRWebUI.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult Index(string value)
+        public IActionResult Index(string? value, IFormFile? qrImage)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
+            // QR oluşturma (senin mevcut formatın)
+            if (!string.IsNullOrWhiteSpace(value))
             {
-                QRCodeGenerator createQRCode= new QRCodeGenerator();
-                QRCodeGenerator.QRCode squareCode= createQRCode.CreateQrCode(value,QRCodeGenerator.ECCLevel.Q);
-                using (Bitmap image = squareCode.GetGraphic(10))
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    image.Save(memoryStream, ImageFormat.Png);
-                    ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
+                    QRCodeGenerator createQRCode = new QRCodeGenerator();
+                    QRCodeGenerator.QRCode squareCode = createQRCode.CreateQrCode(value, QRCodeGenerator.ECCLevel.Q);
+
+                    using (Bitmap image = squareCode.GetGraphic(10))
+                    {
+                        image.Save(memoryStream, ImageFormat.Png);
+                        ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(memoryStream.ToArray());
+                    }
                 }
             }
+
+            // QR çözme
+            if (qrImage != null && qrImage.Length > 0)
+            {
+                using var stream = qrImage.OpenReadStream();
+                using var bitmap = (Bitmap)System.Drawing.Image.FromStream(stream);
+
+                var reader = new BarcodeReader();
+                var result = reader.Decode(bitmap);
+
+                ViewBag.DecodedText = result?.Text ?? "QR kod çözülemedi.";
+            }
+
             return View();
         }
     }
