@@ -17,7 +17,7 @@ namespace SignalRWebUI.Controllers
         [HttpPost]
         public IActionResult Index(string? value, IFormFile? qrImage)
         {
-            // QR oluşturma (senin mevcut formatın)
+            // QR oluşturma 
             if (!string.IsNullOrWhiteSpace(value))
             {
                 using (MemoryStream memoryStream = new MemoryStream())
