@@ -28,18 +28,9 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateContact (CreateContactDto createContactDto)
         {
-            _contactService.TAdd(new Contact()
-            { FooterDescription=createContactDto.FooterDescription,
-              Location = createContactDto.Location,
-              mail = createContactDto.mail,
-              Phone = createContactDto.Phone,
-              FooterTitle=createContactDto.FooterTitle,
-                OpenDays=createContactDto.OpenDays,
-                OpenDaysDescription=createContactDto.OpenDaysDescription,
-                OpenHours=createContactDto.OpenHours
-
-            });
-           return Ok("iletişim bilgisi eklendi");
+            var value = _mapper.Map<Contact>(createContactDto);
+            _contactService.TAdd(value);
+            return Ok("iletişim bilgisi eklendi");
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteContact(int id)
@@ -52,23 +43,13 @@ namespace SignalRApi.Controllers
         public IActionResult GetContact(int id)
         {
             var values = _contactService.TGetByID(id);
-            return Ok(values);
+            return Ok(_mapper.Map<GetContactDto>(values));
         }
         [HttpPut]   
         public IActionResult UpdateContact(UpdateContactDto updateContactDto)
         {
-            _contactService.TUpdate(new Contact()
-            {
-                ContactID=updateContactDto.ContactID,
-                FooterDescription=updateContactDto.FooterDescription,
-                Location=updateContactDto.Location,
-                mail=updateContactDto.mail,
-                Phone=updateContactDto.Phone,
-                FooterTitle=updateContactDto.FooterTitle,
-                OpenDays=updateContactDto.OpenDays,
-                OpenDaysDescription = updateContactDto.OpenDaysDescription,
-                OpenHours=updateContactDto.OpenHours
-            });
+            var value = _mapper.Map<Contact>(updateContactDto);
+            _contactService.TUpdate(value);
             return Ok("iletişim bilgisi güncellendi");
         }
     }
