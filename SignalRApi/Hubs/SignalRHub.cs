@@ -23,6 +23,7 @@ namespace SignalRApi.Hubs
             _bookingService = bookingService;
             _notificationService = notificationService;
         }
+       
         public static int clientCount { get; set; } = 0;
         public async Task SendStatistic()
         {
@@ -70,6 +71,7 @@ namespace SignalRApi.Hubs
             var value15 = _menuTableService.TMenutableCount();
             await Clients.All.SendAsync("ReceiveMenutableCount", value15);
         }
+       
         public async Task SengProgress()
         {
             var value = _moneyCaseService.TTotalMoneyCaseAmount();
@@ -80,6 +82,27 @@ namespace SignalRApi.Hubs
 
             var value3 = _menuTableService.TMenutableCount();
             await Clients.All.SendAsync("ReceiveMenutableCount", value3);
+
+            var value5 = _productService.TProductPriceAvg();
+            await Clients.All.SendAsync("ReceiveProductPriceAvg", value5);
+
+            var value6 = _productService.TProductAvgPriceByHamburger();
+            await Clients.All.SendAsync("ReceiveAvgPriceByHamburger", value6);
+
+            var value7 = _productService.TProductCountByCategoryNameDrink();
+            await Clients.All.SendAsync("ReceiveProductCountByCategoryNameDrink", value7);
+
+            var value8 = _orderService.TTotalOrderCount();
+            await Clients.All.SendAsync("ReceiveTotalOrderCount", value8);
+
+            var value9 = _productService.TProductPriceBySteakBurger();
+            await Clients.All.SendAsync("ReceiveProductPriceBySteakBurger", value9);
+
+            var value10 = _productService.TTotalPriceByDrinkCategory();
+            await Clients.All.SendAsync("ReceiveTotalPriceByDrinkCategory", value10);
+
+            var value11 = _productService.TTotalPriceBySaladCategory();
+            await Clients.All.SendAsync("ReceiveTotalPriceBySaladCategory", value11);
         }
         public async Task GetBookingList()
         {
