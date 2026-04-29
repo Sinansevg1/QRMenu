@@ -134,5 +134,12 @@ namespace SignalRApi.Controllers
             return Ok("Ürün Bilgisi Güncellendi");
         }
 
+        [HttpGet("GetLast9Productd")]
+        public IActionResult GetLast9Productd()
+        { var value= _productService.TGetLast9Productd();
+            return Ok(value);
+        }
+           
+
     }
 }
