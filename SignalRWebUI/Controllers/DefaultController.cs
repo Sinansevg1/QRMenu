@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SignalR.DtoLayer.ContactDto;
 using SignalRWebUI.Dtos.MessageDtos;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace SignalRWebUI.Controllers
 {
@@ -16,20 +18,29 @@ namespace SignalRWebUI.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
-           
+
+           // var client = _httpClientFactory.CreateClient();
+           // var responseMessage = await client.GetAsync("https://localhost:7096/api/Contact");
+           // var jsonData = await responseMessage.Content.ReadAsStringAsync();
+           //// var values = JsonConvert.DeserializeObject<ResultContactDto>(jsonData);
+           //JsonObject item =JsonObject.Parse(jsonData);
+           // ViewBag.location = values.Location;
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7096/api/Contact");
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            JArray item= JArray.Parse(responseBody);
+            string value= item[0]["location"].ToString();
+            ViewBag.location = value;
             return View();
         }
 
         [HttpGet]
-        public async Task< PartialViewResult> SendMessage()
+        public PartialViewResult SendMessage()
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7096/api/Contact");
-            var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<ResultContactDto>(jsonData);
-            ViewBag.location = values.Location;
             return PartialView();
         }
         public async Task< IActionResult> SendMessage(CreateMessageDto createMessageDto)
