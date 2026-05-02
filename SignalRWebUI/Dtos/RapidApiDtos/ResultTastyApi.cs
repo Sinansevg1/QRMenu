@@ -1,5 +1,9 @@
 ﻿namespace SignalRWebUI.Dtos.RapidApiDtos
 {
+    public class RootTastyApi
+    {
+        public List<ResultTastyApi> Results { get; set; }
+    }
     public class ResultTastyApi
     {
         public string Name { get; set; }
