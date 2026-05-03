@@ -39,15 +39,24 @@ namespace SignalRWebUI.Controllers
             string value = item[0]["location"].ToString();
             ViewBag.location = value;
 
+            createBookingDto.Description = "a"; 
+
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createBookingDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("https://localhost:7096/api/Booking", stringContent);
+           
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("index","Default");
+                return RedirectToAction("Index","Default");
             }
-            return View();
+            else
+            {
+                var errorcontent = await responseMessage.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, errorcontent);
+                return View();
+            }
+            
         }
     }
 }
