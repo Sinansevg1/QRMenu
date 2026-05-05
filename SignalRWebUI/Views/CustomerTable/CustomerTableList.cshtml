@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = null;
+    string color = "";
+    string status = "";
 }
 
 <!DOCTYPE html>
@@ -10,10 +12,21 @@
 
 
 <style>
-    .widget {
+    .widgettrue {
         width: 200px;
         height: 100px;
         background-color: #2ecc71; /* Yeşil arka plan */
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        color: white;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .widgetfalse {
+        width: 200px;
+        height: 100px;
+        background-color: #ff6b6b; /* Kırmızı arka plan */
         display: flex;
         align-items: center;
         border-radius: 10px;
@@ -35,7 +48,7 @@
 
         .widget-icon i {
             font-size: 24px;
-            color: #2ecc71;
+            color: black;
         }
 
     .widget-text {
@@ -80,16 +93,30 @@
         <div class="row px-xl-5" style="margin-right:10px">
             @foreach (var item in Model)
             {
-                <div class="widget">
+                if (item.Status == true)
+                {
+                    color = "widgetfalse";
+                    status = "Masa dolu";
 
-                    <div class="widget-icon">
-                        <i class="fas fa-chair"></i> <!-- Masa ikonu -->
-                    </div>
-                    <div class="widget-text">
-                        <h3>@item.Name</h3>
-                        <p>@item.Status</p>
-                    </div>
+                }
+                if (item.Status == false)
+                {
+                    color = "widgettrue";
+                    status = "Masa boş";
 
+                }
+                <div class="col-md-3 mb-4">
+                    <div class="@color">
+
+                        <div class="widget-icon">
+                            <a href="/Default/Index/"><i class="fas fa-chair"></i> <!-- Masa ikonu --></a>
+                        </div>
+                        <div class="widget-text">
+                            <h3>@item.Name</h3>
+                            <p>@status</p>
+                        </div>
+
+                    </div>
                 </div>
             }
         </div>
