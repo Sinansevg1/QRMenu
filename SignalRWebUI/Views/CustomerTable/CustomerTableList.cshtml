@@ -1,10 +1,14 @@
-﻿@{
+﻿@model List<ResultMenuTableDto>
+
+@{
     ViewData["Title"] = "Index";
     Layout = null;
 }
 
 <!DOCTYPE html>
 <html>
+
+
 <style>
     .widget {
         width: 200px;
@@ -50,6 +54,7 @@
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+
 @await Component.InvokeAsync("_UILayoutHeadComponentPartial")
 
 <body class="sub_page">
@@ -69,20 +74,29 @@
         </div>
     </div>
 
+
     <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="widget">
-                <div class="widget-icon">
-                    <i class="fas fa-chair"></i> <!-- Masa ikonu -->
+
+        <div class="row px-xl-5" style="margin-right:10px">
+            @foreach (var item in Model)
+            {
+                <div class="widget">
+
+                    <div class="widget-icon">
+                        <i class="fas fa-chair"></i> <!-- Masa ikonu -->
+                    </div>
+                    <div class="widget-text">
+                        <h3>@item.Name</h3>
+                        <p>@item.Status</p>
+                    </div>
+
                 </div>
-                <div class="widget-text">
-                    <h3>Bahçe 01</h3>
-                    <p>Dolu</p>
-                </div>
-            </div>
-            
+            }
         </div>
+
     </div>
+
+
 
     @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
 
