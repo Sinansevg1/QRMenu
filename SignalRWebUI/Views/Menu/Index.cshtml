@@ -45,7 +45,7 @@
                                             <h6>
                                                 @item.Price₺
                                             </h6>
-                                            <a href="#" onclick="showproductid(@item.ProductID)">
+                                            <a href="#" onclick="showproductid(@item.ProductID , @ViewBag.v)">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                                     <g>
                                                         <g>
@@ -120,13 +120,15 @@
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
     <script>
-        function showproductid(value) {
+        function showproductid(value,menuTableId) {
             var id=value;
             $.ajax({
                 type:'POST',
                 url:"/Menu/AddBasket/" + id,
-                data:{ ProductID: id},
-                contentType:'json',
+                data:{ ProductID: id,
+                MenuTableId:@ViewBag.v
+                },
+                
                 success:function(){
                     swal(" Seçilen Ürün ID :  "+id,"Seçtiğiniz ürün başarıyla sepete eklendi!", "success");
 
