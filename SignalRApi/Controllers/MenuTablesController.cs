@@ -21,7 +21,7 @@ namespace SignalRApi.Controllers
         [HttpGet("MenuTableCount")]
         public IActionResult MenuTableCount()
         {
-            return Ok( _menuTableService.TMenutableCount());
+            return Ok(_menuTableService.TMenutableCount());
         }
         [HttpGet]
         public IActionResult MenuTableList()
@@ -32,7 +32,7 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateMenuTable(CreateMenuTableDto createMenuTableDto)
         {
-           createMenuTableDto.Status = false;
+            createMenuTableDto.Status = false;
             var value = _mapper.Map<MenuTable>(createMenuTableDto);
             _menuTableService.TAdd(value);
             return Ok("Masa başarılı bir şekilde eklendi");
@@ -56,6 +56,19 @@ namespace SignalRApi.Controllers
         {
             var value = _menuTableService.TGetByID(id);
             return Ok(_mapper.Map<GetMenuTableDto>(value));
+        }
+        [HttpGet("ChangeMenuTableStatusToTrue")]
+        public IActionResult ChangeMenuTableStatusToTrue(int id)
+        {
+            _menuTableService.TChangeMenuTableStatusToTrue(id);
+            return Ok("Masa durumu aktif olarak değiştirildi");
+        }
+        [HttpGet("ChangeMenuTableStatusToFalse")]
+        public IActionResult ChangeMenuTableStatusToFalse(int id)
+        {
+            _menuTableService.TChangeMenuTableStatusToFalse(id);
+            return Ok("Masa durumu pasif olarak değiştirildi");
+
         }
     }
 }
